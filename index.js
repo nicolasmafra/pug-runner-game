@@ -5,7 +5,7 @@ var path    = require('path'); // Módulo para manipular caminhos
 var port    = process.env.PORT || 3000; // Porta do servidor
 
 // Mandando o Express rodar estáticamente a pasta client
-app.use(express.static(path.join(__dirname, 'PugRunner'))); 
+app.use(express.static(path.join(__dirname, 'src'))); 
 
 
 // Na rota principal, a página é carregada 
