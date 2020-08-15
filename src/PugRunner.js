@@ -393,11 +393,11 @@ var role = {
                         if (role.score > role.highScore)
                                 role.highScore = role.score;
                 }
-        gfx.objects.unshift({x:600,y:50,text:("Pontuação: " + role.score),color:"black"});
+		role.updateScore();
 	},
 	losting: function () {
         role.updateObjects();
-        gfx.objects.unshift({x:600,y:50,text:("Pontuação: " + role.score),color:"black"});
+		role.updateScore();
 		role.player.y = 2*gfx.height;
 		role.counter = (role.counter > 0)?0:role.counter-0.1;
 		if (role.speed() >= 0) {
@@ -457,7 +457,10 @@ var role = {
 			motor.objects.push(role.backGrounds[i]);
             role.backGrounds[i].speedX = -role.speed()*role.paralaxe;
 		}
-    },
+	},
+	updateScore: function() {
+        gfx.objects.unshift({x:50,y:50,text:("Pontuação: " + role.score),color:"black"});
+	}
 };
 
 var db = {
