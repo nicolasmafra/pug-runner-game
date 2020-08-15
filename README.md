@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/nickmafra/pug-runner-game.svg?branch=master)](https://travis-ci.com/nickmafra/pug-runner-game)
 # PugRunnerGame
 Jogo em Canvas HTML
 
