@@ -6,24 +6,38 @@ function start() {
 
 var gfx = {
 	backgroundColor: "#7b057e",
-	height: window.innerHeight,
-	width: window.innerWidth,
+	height: null,
+	width: null,
 	frames: 0,
 	imgs: {},
     objects: [],
 	start: function () {
-		this.canvas = document.createElement("canvas");
+		this.canvas = document.getElementsByTagName("canvas")[0];
 		this.context = gfx.canvas.getContext("2d");
 		this.context.font = "30px ArialBlack";
-		if (gfx.width >= 600) {
-			this.width = 900;
-			this.height = 500;
-		}
+		this.width = 900;
+		this.height = 500;
 		gfx.canvas.width = gfx.width;
 		gfx.canvas.height = gfx.height;
-		gfx.canvas.style.border = "1px solid #000";
-		document.body.insertBefore(gfx.canvas, document.body.childNodes[0]);
+		gfx.resize();
+		window.addEventListener('resize', gfx.resize, false);
 		gfx.loadImgs();
+	},
+	resize: function() {
+		var canvasRatio = gfx.width / gfx.height;
+		var screenRatio = window.innerWidth / window.innerHeight;
+		var screenWidth;
+		var screenHeight;
+		if (screenRatio > canvasRatio) {
+			// fit by height
+			screenHeight = window.innerHeight;
+			screenWidth = screenHeight * canvasRatio;
+		} else {
+			// fit by width
+			screenWidth = window.innerWidth;
+			screenHeight = screenWidth / canvasRatio;
+		}
+		gfx.canvas.setAttribute("style", "width:" + screenWidth + "px;height:" + screenHeight + "px");
 	},
 	loaded: function() {
 		for (var img in gfx.imgs) {

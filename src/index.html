@@ -2,15 +2,29 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
 
 		<title>Pug Runner</title>
 		<style>
-			body {height: 500px;}
-			canvas { position: absolute; top: 0px; bottom: 0px; left:0px;right:0px; margin:auto;}		
+			canvas {position: fixed}
+			
+			.center {
+			  margin: 0;
+			  position: absolute;
+			  top: 50%;
+			  left: 50%;
+			  -ms-transform: translate(-50%, -50%);
+			  transform: translate(-50%, -50%);
+			}
 		</style>
-		<script src="PugRunner.js"></script>
 	</head>
 	<body onload="start();">
+		<canvas class="center"></canvas>
+		<h1 style="position:fixed;display:none">test=5</h1>
+		<script src="PugRunner.js"></script>
 	</body>
 </html>
