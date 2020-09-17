@@ -322,7 +322,7 @@ var ctrl = {
 
 var role = {
 	maxJumps: 4,
-	states: {loading: -1, stop: 0, run: 1, lost: 2, losting: 3},
+	states: {loading: -1, stop: 0, prepare: 1, running: 2, lost: 3, losting: 4},
 	counter: 0,
     paralaxe: 0.9,
     timeBone: 100,
@@ -351,8 +351,11 @@ var role = {
 			case role.states.stop:
 				role.stop();
 				break;
-			case role.states.run:
-				role.run();
+			case role.states.prepare:
+				role.prepare();
+				break;
+			case role.states.running:
+				role.running();
 				break;
 			case role.states.losting:
 				role.losting();
@@ -377,26 +380,33 @@ var role = {
         gfx.objects = [{x:0,y:0,width:900,height:464,img:{src:"Start", offsetX:0,offsetY:18,order:null}}];
 		if (ctrl.check("start")) {
 			ctrl.keys[ctrl.keysMap["start"]] = false;
-            motor.objects = [];
-            gfx.objects = [];
-			role.obstacles = [];
-            role.grounds = [];
-            role.backGrounds = [];
-            role.counter = 0;
-            role.score = 0;
-            gfx.frames = 0;
             
-            role.grounds = [motor.createGround()];
-            role.grounds[0].x = 0;
-            role.backGrounds = [motor.createBackGround()];
-            role.backGrounds[0].x = 0;
-            role.backGrounds[0].speedX = -role.speed()*role.paralaxe;
-			role.player = motor.createPlayer();
-            role.player.speedX = -role.speed();
-			role.state = role.states.run;
+			role.state = role.states.prepare;
 		}
 	},
-	run: function () {
+	prepare: function () {
+		motor.objects = [];
+		gfx.objects = [];
+		role.obstacles = [];
+		role.grounds = [];
+		role.backGrounds = [];
+		role.counter = 0;
+		role.score = 0;
+		gfx.frames = 0;
+		
+		role.bones = [];
+		role.obstacles = [];
+		role.grounds = [motor.createGround()];
+		role.grounds[0].x = 0;
+		role.backGrounds = [motor.createBackGround()];
+		role.backGrounds[0].x = 0;
+		role.backGrounds[0].speedX = -role.speed()*role.paralaxe;
+		role.player = motor.createPlayer();
+		role.player.speedX = -role.speed();
+		
+		role.state = role.states.running;
+	},
+	running: function () {
         role.updateObjects();
 		role.counter++;
 		if (ctrl.check("jump")) {
@@ -437,7 +447,6 @@ var role = {
                 {x:350,y:400,text:("Sua pontuação: " + role.score),color:"white"},
                 {x:300,y:30,text:("Pontuação Máxima: " + role.highScore),color:"white"},
                 {x:0,y:0,width:900,height:464,img:{src:"GameOver", offsetX:0,offsetY:18,order:null}}]
-        gfx.update();
 		if (ctrl.check("start")) {
 			ctrl.keys[ctrl.keysMap["start"]] = false;
 			role.state = role.states.stop;
