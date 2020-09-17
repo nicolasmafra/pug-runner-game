@@ -60,8 +60,7 @@ var gfx = {
 		}
 		return true;
 	},
-	draw: function () {
-        var o = gfx.objects;
+	draw: function (o) {
 		for (var i = o.length - 1; i >= 0; i--) {
             if (o[i].text != null && o[i].text != undefined) {
                 gfx.context.font = "30px ArialBlack";
@@ -81,8 +80,9 @@ var gfx = {
     },
 	update: function () {
 		gfx.clear();
-		gfx.objects.push({color: gfx.backgroundColor, x: 0, y: 0, width: gfx.width, height: gfx.height});
-		gfx.draw();
+        var o = gfx.objects.slice();
+		o.push({color: gfx.backgroundColor, x: 0, y: 0, width: gfx.width, height: gfx.height});
+		gfx.draw(o);
 		gfx.frames++;
 	},
 	animate: function (img) {
@@ -362,10 +362,8 @@ var role = {
 				break;
 			default:
 				console.info("Erro! state = " + role.state);
-				role.state = role.states.stop;
-				break;
+				return;
 		}
-        motor.update();
 		gfx.update();
 		window.requestAnimationFrame(role.update);
 	},
@@ -422,6 +420,7 @@ var role = {
                                 role.highScore = role.score;
                 }
 		role.updateScore();
+        motor.update();
 	},
 	losting: function () {
         role.updateObjects();
@@ -431,6 +430,7 @@ var role = {
 		if (role.speed() >= 0) {
 			role.state = role.states.lost;
 		}
+        motor.update();
 	},
 	lost: function () {
         gfx.objects = [
