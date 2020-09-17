@@ -2,6 +2,10 @@
 # PugRunnerGame
 Jogo em Canvas HTML
 
+Venha jogar com este fofinho Pug em uma caça aos ossinhos!
+
+![alt text](https://github.com/nickmafra/pug-runner-game/blob/master/img/screenshot-ingame.png?raw=true)
+
 Este jogo foi desenvolvido como trabalho da faculdade por meu grupo:
 - Lucas Ferreira Batista, desenvolveu site para apresentação.
 - Paula Simão da Costa, desenvolveu site para apresentação e selecionou as imagens para o jogo.
