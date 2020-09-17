@@ -12,7 +12,7 @@ var gfx = {
 	imgs: {},
     objects: [],
 	start: function () {
-		this.canvas = document.getElementsByTagName("canvas")[0];
+		this.canvas = document.getElementById("game");
 		this.context = gfx.canvas.getContext("2d");
 		this.context.font = "30px ArialBlack";
 		this.width = 900;
@@ -23,22 +23,36 @@ var gfx = {
 		window.addEventListener('resize', gfx.resize, false);
 		gfx.loadImgs();
 	},
+	
+	
 	resize: function() {
+		var containerStyle = window.getComputedStyle(document.getElementById("container"));
+		var otherContentStyle = window.getComputedStyle(document.getElementById("other-content"));
+		var containerWidth = containerStyle.width.replace("px", "");
+		var containerHeight = containerStyle.height.replace("px", "");
+		var otherContentHeight = otherContentStyle.height.replace("px", "");
+		console.log("screen resized: container=" + containerWidth + " x " + containerHeight + ", other-content-height=" + otherContentHeight);
+		
+		var availableWidth = containerWidth;
+		var availableHeight = containerHeight - otherContentHeight;
 		var canvasRatio = gfx.width / gfx.height;
-		var screenRatio = window.innerWidth / window.innerHeight;
-		var screenWidth;
-		var screenHeight;
+		var screenRatio = availableWidth / availableHeight;
+		
+		var tagWidth;
+		var tagHeight;
 		if (screenRatio > canvasRatio) {
 			// fit by height
-			screenHeight = window.innerHeight;
-			screenWidth = screenHeight * canvasRatio;
+			tagHeight = availableHeight;
+			tagWidth = Math.floor(tagHeight * canvasRatio);
 		} else {
 			// fit by width
-			screenWidth = window.innerWidth;
-			screenHeight = screenWidth / canvasRatio;
+			tagWidth = availableWidth;
+			tagHeight = Math.floor(tagWidth / canvasRatio);
 		}
-		gfx.canvas.setAttribute("style", "width:" + screenWidth + "px;height:" + screenHeight + "px");
+		document.getElementById("game-content").setAttribute("style", "width:" + tagWidth + "px;height:" + tagHeight + "px");
 	},
+	
+	
 	loaded: function() {
 		for (var img in gfx.imgs) {
 			if (!gfx.imgs[img].complete)

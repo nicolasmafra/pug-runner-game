@@ -10,21 +10,49 @@
 
 		<title>Pug Runner</title>
 		<style>
-			canvas {position: fixed}
-			
+			html, body {
+				width: 100%;
+				height: 100%;
+				margin: 0;
+			}
+			#container {
+				width: 100%;
+				height: 100%;
+			}
+			#content {
+				max-width: 100%;
+				max-height: 100%;
+			}
 			.center {
 			  margin: 0;
 			  position: absolute;
-			  top: 50%;
 			  left: 50%;
+			  top: 50%;
 			  -ms-transform: translate(-50%, -50%);
 			  transform: translate(-50%, -50%);
+			}
+			#game {
+				width: 100%;
+				height: 100%;
+			}
+			#other-content {
+				padding: 5px;
+				box-sizing: border-box;
 			}
 		</style>
 	</head>
 	<body onload="start();">
-		<canvas class="center"></canvas>
-		<h1 style="position:fixed;display:none">test=5</h1>
+		<div id="container">
+			<div id="content" class="center">
+				<div id="game-content">
+					<canvas id="game"></canvas>
+				</div>
+				<div id="other-content">
+					Veja o código fonte no <a href="https://github.com/nickmafra/pug-runner-game">GitHub</a>
+					<h1 style="position:fixed;display:none">test=6</h1>
+				</div>
+			</div>
+		</div>
 		<script src="PugRunner.js"></script>
 	</body>
 </html>
