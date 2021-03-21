@@ -4,6 +4,45 @@ function start() {
 
 // Objects
 
+class Sound {
+	constructor(src) {
+		this.sound = document.createElement("audio");
+		this.sound.src = "./audio/" + src;
+		this.sound.setAttribute("preload", "auto");
+		this.sound.setAttribute("controls", "none");
+		this.sound.style.display = "none";
+		document.body.appendChild(this.sound);
+	}
+
+	/**
+	 * @param {number} volume
+	 */
+	set volume(volume) {
+		this.sound.volume = volume;
+	}
+
+	/**
+	 * @param {boolean} loop
+	 */
+	set loop(loop) {
+		this.sound.loop = loop;
+	}
+
+	play() {
+		this.sound.play();
+	}
+	stop() {
+		this.sound.pause();
+	}
+}
+
+var sounds = {};
+sounds.music = new Sound("in-game-music.mp3");
+sounds.music.loop = true;
+sounds.bark = new Sound("bark.mp3");
+sounds.bark2 = new Sound("bark2.mp3");
+sounds.crying = new Sound("crying.mp3");
+
 var gfx = {
 	backgroundColor: "#7b057e",
 	height: null,
@@ -334,15 +373,20 @@ var role = {
 	grounds: [],
 	backGrounds: [],
 	initSpeed: 6,
+
 	speed: function () {
         return (role.counter>=0)?-role.initSpeed-role.counter/600:-role.initSpeed-role.counter;
     },
+
 	start: function() {
 		gfx.start();
 		ctrl.start();
+		sounds.music.volume = 0.2;
+
 		this.state = role.states.loading;
 		role.update();
 	},
+
 	update: function () {
 		switch (role.state) {
 			case role.states.loading:
@@ -405,6 +449,8 @@ var role = {
 		role.player.speedX = -role.speed();
 		
 		role.state = role.states.running;
+		sounds.music.play();
+		sounds.bark.play();
 	},
 	running: function () {
         role.updateObjects();
@@ -421,6 +467,13 @@ var role = {
                 role.score++;
                 role.bones.splice(i, 1);
                 i = 0;
+				if (role.score % 5 == 0) {
+					if (role.score % 10 == 0) {
+						sounds.bark2.play();
+					} else {
+						sounds.bark.play();
+					}
+				}
             }
 		for (var i = role.obstacles.length - 1; i >= 0; i--)
 			motor.colision(role.player, role.obstacles[i])
@@ -439,6 +492,8 @@ var role = {
 		role.counter = (role.counter > 0)?0:role.counter-0.1;
 		if (role.speed() >= 0) {
 			role.state = role.states.lost;
+			sounds.music.stop();
+			sounds.crying.play();
 		}
         motor.update();
 	},
