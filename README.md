@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/nickmafra/pug-runner-game.svg?branch=master)](https://travis-ci.com/nickmafra/pug-runner-game)
 # PugRunnerGame
-Jogo em Canvas HTML
+Jogo em Canvas HTML. Acesse [aqui](https://nickmafra.github.io/pug-runner-game/site)
 
 Venha jogar com este fofinho Pug em uma caça aos ossinhos!
 
